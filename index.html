@@ -360,15 +360,25 @@
 </section>
 
 <section id="remind">
-  <h2>リマインダーの承認フロー</h2>
-  <p>試合リマインダーは承認制です。リマインド等の自動動作は、管理者の承認後に行います。</p>
+  <h2>リマインダーの流れ（登録から配信まで）</h2>
+  <p>試合リマインダーは承認制です。登録だけでは配信されず、管理者の承認後に、選んだタイミングで配信されます。登録・承認・配信はすべて管理者（Administrator）権限またはサーバーの管理（Manage Server）権限を持つ人が行います。</p>
   <ol class="flow">
-    <li><strong>登録</strong> ― メンバーが登録します（試合と通知タイミングを指定）。</li>
-    <li><strong>承認待ち</strong> ― 登録直後はまだ配信されません。</li>
-    <li><strong>管理者が承認</strong> ― 承認履歴（誰が・いつ）も残ります。</li>
-    <li><strong>配信</strong> ― 前日／開始時／終了2時間後（結果報告）のタイミングで配信します。</li>
+    <li><strong>登録する</strong> ― <span class="cmd">/remind</span> を実行します。<span class="cmd">action</span> で <span class="cmd">register</span>（登録）を選び、<span class="cmd">timing</span>（配信タイミング）、<span class="cmd">round_name</span>（ラウンド名、例：決勝）、<span class="cmd">match_date</span>（試合日、YYYY.MM.DD形式）を入力します。</li>
+    <li><strong>大会を選ぶ</strong> ― 大会を選ぶ画面が出るので、対象の大会を選択します。</li>
+    <li><strong>承認待ちのカードが出る</strong> ― 登録したチャンネルに、大会名・ラウンド・試合日・タイミングと「承認待ちのリマインダーです。」が書かれたカードが公開投稿されます。カードには「承認」「却下」のボタンが付きます。この時点ではまだ配信されません。</li>
+    <li><strong>管理者が承認する</strong> ― 管理者がカードの「承認」ボタンを押します。承認するとカードに「承認者：名前（日時）」が追記され、ボタンが消えます。「却下」を押すと配信されません（状態は「却下」）。権限のない人がボタンを押すと、その人にだけ「権限が必要です」と表示されます。</li>
+    <li><strong>指定のタイミングで配信される</strong> ― 承認済みのリマインダーだけが、登録したチャンネルに自動で配信されます。配信されるのは、登録時に選んだタイミング1回だけです。配信文には大会名・ラウンド・試合日・タイミングと、大会ページへのリンクが付きます。</li>
+    <li><strong>確認と削除</strong> ― <span class="cmd">/remind</span> で <span class="cmd">action</span> に <span class="cmd">list</span>（一覧）を選ぶと、登録されたリマインダーと状態（承認待ち／承認済み／却下）が表示されます。<span class="cmd">delete</span>（削除）を選ぶと、登録されたリマインダーがすべて削除されます（1件ずつの削除ではなく全削除です）。</li>
   </ol>
-  <p class="muted small">承認済みのリマインダーを編集すると、再び「承認待ち」に戻り、再承認が必要です。</p>
+  <h3>配信される目安の時刻</h3>
+  <p>ポータルには試合の開始時刻がないため、下の時刻はボット側で決めた目安です。</p>
+  <table>
+    <tr><th>タイミング</th><th>配信される目安の時刻</th></tr>
+    <tr><td><span class="cmd">day_before</span>（前日）</td><td>試合日の前日 18:00</td></tr>
+    <tr><td><span class="cmd">at_start</span>（開始時）</td><td>試合日当日 09:00</td></tr>
+    <tr><td><span class="cmd">after_2h</span>（終了2時間後）</td><td>試合日当日 21:00（結果報告）</td></tr>
+  </table>
+  <p class="muted small">配信の確認は5分ごとに行います。承認されていないリマインダーは配信されません。</p>
 </section>
 
 <section id="roadmap">
@@ -429,7 +439,7 @@
 
 <section id="tutorial">
   <h2>チュートリアル</h2>
-  <p>eS-League Bot チュートリアル（11ページのPDF）は、こちらからダウンロードできます。</p>
+  <p>eS-League Bot チュートリアル（12ページのPDF）は、こちらからダウンロードできます。</p>
   <p><a href="tutorial.pdf">チュートリアルPDFをダウンロード</a></p>
 </section>
 
