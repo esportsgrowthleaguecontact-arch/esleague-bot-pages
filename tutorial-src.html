@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>eS-League Bot チュートリアル</title>
+<style>
+  @page {
+    size: A4;
+    margin: 15mm 17mm 17mm;
+    @bottom-center {
+      content: "eS-League Bot チュートリアル ｜ " counter(page) " / " counter(pages);
+      font-family: "Noto Sans CJK JP", sans-serif;
+      font-size: 8pt;
+      color: #8a9bb8;
+    }
+  }
+  @page cover { margin: 0; @bottom-center { content: none; } }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Noto Sans CJK JP", sans-serif;
+    font-size: 10pt;
+    line-height: 1.65;
+    color: #101a30;
+  }
+  .cover {
+    page: cover;
+    width: 210mm; height: 297mm;
+    page-break-after: always;
+    background: #081226;
+    color: #ffffff;
+    padding: 34mm 20mm 20mm;
+    position: relative;
+  }
+  .cover .bar { width: 34mm; height: 3mm; background: #e6007e; margin-bottom: 14mm; }
+  .cover .kicker { color: #a9b8d6; font-size: 12pt; letter-spacing: 0.28em; margin: 0 0 6mm; }
+  .cover h1 { font-size: 40pt; line-height: 1.25; margin: 0 0 4mm; letter-spacing: 0.02em; }
+  .cover h1 .accent { color: #e6007e; }
+  .cover .subtitle { font-size: 16pt; color: #a9b8d6; margin: 0 0 16mm; }
+  .cover .lead { font-size: 11pt; line-height: 1.9; color: #dbe4f2; max-width: 150mm; }
+  .cover .stats { margin-top: 16mm; border-top: 1px solid #23406b; padding-top: 8mm; }
+  .cover .stats div { display: inline-block; margin-right: 12mm; }
+  .cover .stats .num { font-size: 22pt; font-weight: bold; color: #ffffff; }
+  .cover .stats .lbl { font-size: 9pt; color: #a9b8d6; }
+  .cover .foot { position: absolute; bottom: 18mm; left: 20mm; right: 20mm; font-size: 9pt; color: #a9b8d6; line-height: 1.8; }
+  .cover .foot a { color: #7fb8ff; text-decoration: none; }
+
+  .page { page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+
+  h2 {
+    font-size: 15pt; line-height: 1.4;
+    margin: 0 0 4mm; padding-bottom: 2mm;
+    border-bottom: 2.5pt solid #e6007e;
+    color: #081226;
+  }
+  h2 .no { color: #e6007e; margin-right: 2mm; }
+  h3 { font-size: 11.5pt; margin: 6mm 0 2mm; color: #0b2a52; }
+  p { margin: 0 0 3mm; }
+  ul, ol { margin: 0 0 3mm; padding-left: 5.5mm; }
+  li { margin-bottom: 1.2mm; }
+  .muted { color: #4c5a75; }
+  .small { font-size: 9pt; }
+  .cmd { font-family: "DejaVu Sans Mono", monospace; font-size: 9.5pt; color: #b0005e; white-space: nowrap; }
+  .note {
+    border: 1px solid #1b6ac9; border-left: 3pt solid #1b6ac9;
+    background: #eef4fc; border-radius: 2mm;
+    padding: 3mm 4mm; margin: 4mm 0;
+  }
+  .warn {
+    border: 1px solid #e6007e; border-left: 3pt solid #e6007e;
+    background: #fdf0f7; border-radius: 2mm;
+    padding: 3mm 4mm; margin: 4mm 0;
+  }
+  table { width: 100%; border-collapse: collapse; margin: 2mm 0 3mm; font-size: 9.5pt; }
+  th, td { padding: 2.2mm 2.8mm; border: 1px solid #c4cede; text-align: left; vertical-align: top; }
+  th { background: #081226; color: #ffffff; white-space: nowrap; }
+  .cols { display: flex; gap: 6mm; }
+  .cols > div { flex: 1; }
+  .card { border: 1px solid #c4cede; border-radius: 2mm; padding: 3.5mm 4mm; margin-bottom: 3mm; }
+  .card h3 { margin-top: 0; }
+  .swatch {
+    display: inline-block; width: 4.5mm; height: 4.5mm;
+    border-radius: 1mm; border: 1px solid rgba(0,0,0,0.25);
+    vertical-align: -0.8mm; margin-right: 1.5mm;
+  }
+  .flow { counter-reset: step; list-style: none; padding: 0; }
+  .flow li {
+    counter-increment: step; position: relative;
+    padding: 3mm 3mm 3mm 13mm; margin-bottom: 2.5mm;
+    background: #f4f6fb; border: 1px solid #c4cede; border-radius: 2mm;
+  }
+  .flow li::before {
+    content: counter(step);
+    position: absolute; left: 3mm; top: 3mm;
+    width: 7mm; height: 7mm; line-height: 7mm; text-align: center;
+    border-radius: 50%; background: #e6007e; color: #fff;
+    font-weight: bold; font-size: 10pt;
+  }
+  .tag {
+    display: inline-block; font-size: 8pt; font-weight: bold;
+    padding: 0.4mm 2mm; border-radius: 1mm; color: #fff; background: #1b6ac9;
+    vertical-align: 0.5mm; margin-left: 1.5mm;
+  }
+  .tag.prep { background: #e6007e; }
+  .tag.check { background: #b7791f; }
+  .numlist { list-style: none; padding-left: 1mm; }
+</style>
+</head>
+<body>
+
+<!-- ============ 1. 表紙 ============ -->
+<section class="cover">
+  <div class="bar"></div>
+  <p class="kicker">E S - L E A G U E &nbsp; B O T</p>
+  <h1>eS-League Bot<br><span class="accent">チュートリアル</span></h1>
+  <p class="subtitle">Discord サーバーで、ポータルの情報を確認する</p>
+  <p class="lead">eS-League Bot は、eS-League ポータルの情報を Discord サーバーに届けるボットです。大会の一覧、順位表、試合の日程と結果、個人ランキング、ニュースなどを、スラッシュコマンドで確認できます。</p>
+  <div class="stats">
+    <div><div class="num">19</div><div class="lbl">コマンド</div></div>
+    <div><div class="num">20</div><div class="lbl">対応言語</div></div>
+    <div><div class="num">23</div><div class="lbl">共有範囲</div></div>
+    <div><div class="num">4</div><div class="lbl">対応組織</div></div>
+  </div>
+  <div class="foot">
+    データ源：eS-League ポータル（https://es-league.games/）<br>
+    対応タイトル：EA SPORTS FC 27 ／ 主な形式：Clubs 11v11・1v1・Ultimate Team（FUT）<br>
+    2026年11月
+  </div>
+</section>
+
+<!-- ============ 2. ボットの概要とサーバー設定の例 ============ -->
+<section class="page">
+  <h2><span class="no">1</span>ボットの概要</h2>
+  <p>eS-League Bot は、eS-League ポータルの情報を Discord サーバーに届けるボットです。大会の一覧、順位表、試合の日程と結果、個人ランキング、ニュースなどを、スラッシュコマンドで確認できます。</p>
+  <h3>データの扱い</h3>
+  <ul>
+    <li>データは <strong>eS-League ポータルのみ</strong>を使います。ポータルにない情報は表示しません。</li>
+    <li>ポータルからの取得は <strong>5分キャッシュ</strong>です。表示が少し遅れることがあります。</li>
+    <li>告知はプレーンテキスト＋任意で画像添付です。文字をデザインに重ねることはしません。</li>
+    <li>デザインは利用者側が仕上げるものが土台です。ボットが勝手に変えることはありません。</li>
+  </ul>
+  <h3>コマンドを使うときの権限</h3>
+  <div class="warn">
+    <p style="margin:0">コマンドは、サーバーの管理者（Administrator）権限またはサーバーの管理（Manage Server）権限を持つ人だけが使えます。権限のない人が実行した場合は、その人にだけ「権限が必要です」と表示されます。権限を持つ人が実行したコマンドの結果は、サーバー内の全員が見える公開投稿になります。ウェルカムの自動投稿やリマインダーの自動投稿など、コマンドではない自動動作は対象外です。</p>
+  </div>
+  <h3>サーバー設定の表示例（リーグ公式サーバー）</h3>
+  <table>
+    <tr><th style="width:32mm">項目</th><th>設定</th></tr>
+    <tr><td>表示言語</td><td>日本語</td></tr>
+    <tr><td>共有範囲</td><td>日本 ― 全体（Growth League＋1〜3部）</td></tr>
+    <tr><td>対応タイトル</td><td>EA SPORTS FC 27</td></tr>
+    <tr><td>主な形式</td><td>Clubs 11v11 ／ 1v1 ／ Ultimate Team（FUT）</td></tr>
+  </table>
+  <p class="muted small">共有範囲と言語の設定は、管理者が Discord のコマンド（/setscope、/setlang）で行います。このチュートリアルの案内ページは閲覧専用で、ここから設定を変更することはできません。</p>
+</section>
+
+<!-- ============ 3. コマンド一覧（ポータル系） ============ -->
+<section class="page">
+  <h2><span class="no">2</span>コマンド一覧（1）ポータル系</h2>
+  <p>大会・順位表・試合・ランキング・ニュースを確認するコマンドです。結果の末尾には、対象の大会ページへのリンクが付きます（/tournaments は大会名自体がリンクです）。</p>
+  <table>
+    <tr><th style="width:30mm">コマンド</th><th>内容</th></tr>
+    <tr><td><span class="cmd">/help</span></td><td>Botの使い方とコマンドのヘルプ。ポータルサイト、リーグの公式サイト、ボットの案内ページへのリンク欄付き。</td></tr>
+    <tr><td><span class="cmd">/tournaments</span></td><td>開催中の大会一覧。各大会名がその大会ページへのリンク。末尾にポータルトップへのリンクを1つ置く。</td></tr>
+    <tr><td><span class="cmd">/next</span></td><td>次節の試合予定を表示します。</td></tr>
+    <tr><td><span class="cmd">/standings</span></td><td>順位表。グループ大会は全グループを表示し、決勝トーナメントではトーナメント表（対戦結果・日程）を表示します。</td></tr>
+    <tr><td><span class="cmd">/matches</span></td><td>試合の日程と結果。末尾に対象の大会ページへのリンク行を付けます。</td></tr>
+    <tr><td><span class="cmd">/ranking</span></td><td>個人ランキング（得点／アシスト／完封）。末尾に対象の大会ページへのリンク行を付けます。</td></tr>
+    <tr><td><span class="cmd">/news</span></td><td>ポータルのニュース・レポート・お知らせ。最新ニュース一覧。各見出しがポータル記事へのリンク付き。</td></tr>
+  </table>
+  <div class="note">
+    <p style="margin:0"><strong>リンクの付け方</strong> ― リンクは Discord のマークダウン形式で付けます。順位表などの等幅表示（コードブロック）の中にはリンクを埋め込まず、リンク行は本文の末尾に分けて置きます。URLは推測で作らず、ポータルから取得した実在のものだけを使います。</p>
+  </div>
+  <p class="muted small">データはポータルのみです。ポータルに掲載されていない開始時刻などは、ボットからも表示されません。</p>
+</section>
+
+<!-- ============ 4. コマンド一覧（投稿・運営・ゲーム・サーバー運営） ============ -->
+<section class="page">
+  <h2><span class="no">3</span>コマンド一覧（2）投稿・運営・その他</h2>
+  <p>投稿・運営、ゲーム・チーム、サーバー運営のコマンドです。</p>
+  <table>
+    <tr><th style="width:30mm">コマンド</th><th>内容</th></tr>
+    <tr><td><span class="cmd">/share</span></td><td>ポータルなどのリンクをサーバーに共有します。貼れるURLは http:// または https:// で始まるものだけです。</td></tr>
+    <tr><td><span class="cmd">/announce</span></td><td>運営からのお知らせを投稿します。文章のみ、または文章＋リンク（任意）＋画像添付のセットで投稿できます。</td></tr>
+    <tr><td><span class="cmd">/games</span></td><td>対応タイトル・形式の一覧。EA SPORTS FC 27 の 11v11／1v1／FUT ほか。</td></tr>
+    <tr><td><span class="cmd">/squad</span></td><td>FUTスカッドの登録・表示。スクリーンショットの添付は保存のみで、OCR読み取りは<span class="tag prep">準備中</span></td></tr>
+    <tr><td><span class="cmd">/ut</span></td><td>選手データベースへのリンク。選手検索のURL形式は<span class="tag check">確認中</span>のため、現在は「確認中」と表示されます。</td></tr>
+    <tr><td><span class="cmd">/clubrank</span></td><td>クラブの順位。EA公式ランキングへのリンクは<span class="tag prep">準備中</span></td></tr>
+    <tr><td><span class="cmd">/setwelcome</span></td><td>入室したメンバーへの歓迎（ボード／DM）の設定。歓迎ボードのデザインテンプレートもここで選びます。</td></tr>
+    <tr><td><span class="cmd">/remind</span></td><td>試合リマインダーを登録します。登録→管理者承認→配信の承認制です。詳しくは「6. リマインダー」をご覧ください。</td></tr>
+    <tr><td><span class="cmd">/schedule</span></td><td>日程調整アンケートを作成します。リアクションで投票します。</td></tr>
+    <tr><td><span class="cmd">/scope</span></td><td>現在の共有範囲を表示します。</td></tr>
+    <tr><td><span class="cmd">/setscope</span></td><td>共有範囲を設定します。初期値は日本。部（1〜3部）は別々の範囲として扱います。加盟国は国名で指定します。</td></tr>
+    <tr><td><span class="cmd">/setlang</span></td><td>Botの表示言語を設定します（20言語）。</td></tr>
+  </table>
+  <p class="muted small">「準備中」「確認中」と書かれているものは、まだ使えない機能です。使えるようになり次第、案内を更新します。</p>
+</section>
+
+<!-- ============ 5. 共有範囲23種類 ============ -->
+<section class="page">
+  <h2><span class="no">4</span>共有範囲（23種類）</h2>
+  <p>共有範囲は、サーバーごとに管理者が <span class="cmd">/setscope</span> で選びます。初期値は日本です。部（1〜3部）は別々の範囲として扱います。加盟国は国名で指定します。</p>
+  <div class="cols">
+    <div>
+      <div class="card">
+        <h3>全体</h3>
+        <ul class="numlist"><li>1. ポータル全体</li></ul>
+      </div>
+      <div class="card">
+        <h3>日本</h3>
+        <ul class="numlist">
+          <li>2. 日本 ― 全体（Growth League＋1〜3部）</li>
+          <li>3. 日本 ― 1部</li>
+          <li>4. 日本 ― 2部</li>
+          <li>5. 日本 ― 3部</li>
+          <li>6. 日本 ― 1〜3部まとめ</li>
+          <li>7. Growth Leagueのみ</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>加盟国</h3>
+        <ul class="numlist">
+          <li>8. 加盟国 ― まとめ</li>
+          <li>9. 加盟国 ― 1部まとめ</li>
+          <li>10. 加盟国 ― 2部まとめ</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <h3>国名指定</h3>
+        <ul class="numlist">
+          <li>11. マレーシア ― 全体</li>
+          <li>12. マレーシア ― 1部</li>
+          <li>13. マレーシア ― 2部</li>
+          <li>14. インドネシア ― 全体</li>
+          <li>15. インドネシア ― 1部</li>
+          <li>16. インドネシア ― 2部</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>RAL</h3>
+        <ul class="numlist">
+          <li>17. RAL ― 全体</li>
+          <li>18. RAL ― 1部（LIGA）</li>
+          <li>19. RAL ― 2部（SEGUNDA）</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>アジア・国際</h3>
+        <ul class="numlist">
+          <li>20. アジア大会（クラブ）</li>
+          <li>21. アジア ナショナルチーム</li>
+          <li>22. ナショナルチーム大会全般</li>
+          <li>23. インターナショナル（国際大会）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <p class="muted small">表示例：リーグ公式サーバーの現在の設定は「日本 ― 全体（Growth League＋1〜3部）」です。</p>
+</section>
+
+<!-- ============ 6. 対応言語20言語 ============ -->
+<section class="page">
+  <h2><span class="no">5</span>対応言語（20言語）</h2>
+  <p>Botの表示言語は、サーバーごとに管理者が <span class="cmd">/setlang</span> で設定します。完全対応は日本語と英語のみです。他の18言語は、中核部分の翻訳と英語フォールバックです。</p>
+  <h3>完全対応（2言語）</h3>
+  <ul>
+    <li>日本語</li>
+    <li>English（英語）</li>
+  </ul>
+  <h3>主要訳＋英語フォールバック（18言語）</h3>
+  <div class="cols">
+    <div>
+      <ul>
+        <li>Español（スペイン語）</li>
+        <li>Português（ポルトガル語）</li>
+        <li>Français（フランス語）</li>
+        <li>Bahasa Indonesia（インドネシア語）</li>
+        <li>Bahasa Melayu（マレー語）</li>
+        <li>한국어（韓国語）</li>
+        <li>中文（中国語）</li>
+        <li>Deutsch（ドイツ語）</li>
+        <li>Italiano（イタリア語）</li>
+      </ul>
+    </div>
+    <div>
+      <ul>
+        <li>Nederlands（オランダ語）</li>
+        <li>Polski（ポーランド語）</li>
+        <li>Українська（ウクライナ語）</li>
+        <li>Русский（ロシア語）</li>
+        <li>Türkçe（トルコ語）</li>
+        <li>العربية（アラビア語）</li>
+        <li>हिन्दी（ヒンディー語）</li>
+        <li>ไทย（タイ語）</li>
+        <li>Tiếng Việt（ベトナム語）</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note">
+    <p style="margin:0">完全対応以外の言語では、翻訳されていない部分は英語で表示されます。あらかじめご了承ください。</p>
+  </div>
+</section>
+
+<!-- ============ 7. 歓迎ボード・歓迎DMとリマインダー承認フロー ============ -->
+<section class="page">
+  <h2><span class="no">6</span>歓迎ボード・歓迎DMとリマインダー</h2>
+  <h3>歓迎ボード・歓迎DM</h3>
+  <p>新しいメンバーがサーバーに入ると、歓迎ボード（公開投稿）と歓迎DMを送ることができます。設定は <span class="cmd">/setwelcome</span> で行います（サーバー設定で切り替え）。</p>
+  <ul>
+    <li>歓迎ボードは、テンプレート画像に、参加したメンバーのアバター・名前・IDだけを合成します。</li>
+    <li>歓迎DMの文章には、ポータルやリーグの公式サイトへのリンクを含めることができます。</li>
+    <li>お知らせ投稿（/announce）の形式は「テキストのみ」と「テキスト＋画像添付」の2つです。デザインの上に文字を重ねることはしません。画像は添付としてそのまま投稿します。</li>
+  </ul>
+  <h3>リマインダーの承認フロー（/remind は承認制）</h3>
+  <p>試合リマインダーは承認制です。リマインド等の自動動作は、管理者の承認後に行います。</p>
+  <ol class="flow">
+    <li><strong>登録</strong> ― メンバーが登録します（試合と通知タイミングを指定）。</li>
+    <li><strong>承認待ち</strong> ― 登録直後はまだ配信されません。</li>
+    <li><strong>管理者が承認</strong> ― 承認履歴（誰が・いつ）も残ります。</li>
+    <li><strong>配信</strong> ― 前日／開始時／終了2時間後（結果報告）のタイミングで配信します。</li>
+  </ol>
+  <div class="note">
+    <p style="margin:0">承認済みのリマインダーを編集すると、再び「承認待ち」に戻り、再承認が必要です。関連する大会ページのURLが分かっている場合のみ、配信文の末尾にリンクを付けます。画像の自動添付は行いません。</p>
+  </div>
+</section>
+
+<!-- ============ 8. デザインテンプレートと対応組織 ============ -->
+<section class="page">
+  <h2><span class="no">7</span>デザインテンプレートと対応組織</h2>
+  <h3>デザインテンプレート（3件）</h3>
+  <p>歓迎ボードのデザインテンプレートです。ブルーとライトは、eS-Leagueのエンブレムのカラーで作られています。</p>
+  <div class="cols">
+    <div class="card">
+      <h3>リーグ標準</h3>
+      <ul>
+        <li><span class="swatch" style="background:#081226"></span>背景 #081226</li>
+        <li><span class="swatch" style="background:#e6007e"></span>アクセント #e6007e</li>
+        <li><span class="swatch" style="background:#ffffff"></span>文字 #ffffff</li>
+        <li><span class="swatch" style="background:#a9b8d6"></span>サブ文字 #a9b8d6</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>ブルー</h3>
+      <ul>
+        <li><span class="swatch" style="background:#0b2a52"></span>背景 #0b2a52</li>
+        <li><span class="swatch" style="background:#1b6ac9"></span>アクセント #1b6ac9</li>
+        <li><span class="swatch" style="background:#ffffff"></span>文字 #ffffff</li>
+        <li><span class="swatch" style="background:#bcd6f5"></span>サブ文字 #bcd6f5</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>ライト</h3>
+      <ul>
+        <li><span class="swatch" style="background:#f4f6fb"></span>背景 #f4f6fb</li>
+        <li><span class="swatch" style="background:#e6007e"></span>アクセント #e6007e</li>
+        <li><span class="swatch" style="background:#101a30"></span>文字 #101a30</li>
+        <li><span class="swatch" style="background:#4c5a75"></span>サブ文字 #4c5a75</li>
+      </ul>
+    </div>
+  </div>
+  <h3>対応組織（4件）</h3>
+  <table>
+    <tr><th style="width:42mm">組織</th><th>内容</th></tr>
+    <tr><td>eS-League</td><td>データ源：ポータル</td></tr>
+    <tr><td>Growth League</td><td>データ源：ポータル</td></tr>
+    <tr><td>RAL</td><td>データ源：ポータル（1部 LIGA／2部 SEGUNDA）</td></tr>
+    <tr><td>A6L（AFTER 6 LEAGUE）</td><td>eS-League が実行委員を務める社会人リーグ</td></tr>
+  </table>
+  <p class="muted small">歓迎ボードに合成するのは、参加したメンバーのアバター・名前・IDだけです。デザインの上に文字を重ねることはしません。</p>
+</section>
+
+<!-- ============ 9. ロードマップと注意事項 ============ -->
+<section class="page">
+  <h2><span class="no">8</span>ロードマップと注意事項</h2>
+  <h3>実装済み</h3>
+  <ul>
+    <li>ポータル連携コマンド一式</li>
+    <li>投稿・運営（リンク共有、お知らせ投稿）</li>
+    <li>FUTスカッド登録</li>
+    <li>歓迎ボード＋歓迎DM</li>
+    <li>承認制リマインダー・日程調整アンケート</li>
+    <li>20言語対応・サーバー別 言語・共有範囲設定</li>
+  </ul>
+  <p class="muted small">※ FUTスカッドのOCR読み取りと /ut の選手検索リンク、/clubrank のEA公式ランキングへのリンクは、それぞれ準備中・確認中です。詳しくは「3. コマンド一覧（2）」をご覧ください。</p>
+  <h3>次フェーズ候補</h3>
+  <ul>
+    <li>レベル・実績システム</li>
+    <li>モデレーション補助</li>
+    <li>カスタムコマンド</li>
+  </ul>
+  <h3>対象外</h3>
+  <ul>
+    <li>音楽再生機能は実装しません</li>
+  </ul>
+  <h3>注意事項</h3>
+  <ul>
+    <li>このチュートリアルの案内ページは閲覧専用です。設定の変更は Discord のコマンド（/setscope、/setlang など）で行ってください。</li>
+    <li>データは eS-League ポータルのみを使います。ポータルにない情報は表示しません。</li>
+    <li>コマンドは管理者権限を持つ人だけが使えます。詳しくは「1. ボットの概要」をご覧ください。</li>
+  </ul>
+  <h3>公式リンク</h3>
+  <ul>
+    <li>eS-League ポータル ― https://es-league.games/</li>
+    <li>Growth League 公式サイト ― https://growthleague.wordpress.com/</li>
+  </ul>
+  <p class="muted small">データ源：eS-League ポータル（https://es-league.games/）／ 2026年11月</p>
+</section>
+
+</body>
+</html>
