@@ -133,6 +133,7 @@
 <nav>
   <a href="#about">このページについて</a>
   <a href="#links">公式リンク</a>
+  <a href="#invite">ボットの招待</a>
   <a href="#commands">コマンド一覧</a>
   <a href="#scope">共有範囲</a>
   <a href="#lang">対応言語</a>
@@ -141,6 +142,7 @@
   <a href="#templates">デザインテンプレート</a>
   <a href="#remind">リマインダー</a>
   <a href="#roadmap">ロードマップ</a>
+  <a href="#params">英語の項目名</a>
   <a href="#tutorial">チュートリアル</a>
 </nav>
 
@@ -156,6 +158,13 @@
     <li><a href="https://es-league.games/">eS-League ポータル</a><br><span class="muted small">大会・順位表・試合結果・ニュースのデータ源です。</span></li>
     <li><a href="https://growthleague.wordpress.com/">Growth League 公式サイト</a><br><span class="muted small">リーグの公式サイトです。</span></li>
   </ul>
+</section>
+
+<section id="invite">
+  <h2>ボットの招待（サーバーへの追加）</h2>
+  <p>ボットはダウンロードするものではなく、Discord サーバーへ招待（追加）するものです。下のリンクを開き、追加するサーバーを選んでください。追加できるのは、そのサーバーの管理者だけです。</p>
+  <p><a href="https://discord.com/oauth2/authorize?client_id=1568968701276070009&scope=bot+applications.commands&permissions=379968">eS-League Bot をサーバーに招待する</a></p>
+  <p class="muted small">ボットに与える権限：チャンネルの表示、メッセージの送信、リアクションの追加、リンクの埋め込み、ファイルの添付、メッセージ履歴の読み取り、外部絵文字の使用。</p>
 </section>
 
 <section id="commands">
@@ -386,9 +395,41 @@
   </ul>
 </section>
 
+
+<section id="params">
+  <h2>英語の項目名の日本語説明</h2>
+  <p>コマンド名（<span class="cmd">/next</span> など）と入力欄の名前（<span class="cmd">action</span> など）は英語のままです。これは Discord の仕組みで、コマンド名は小文字の英数字でなければならないため、ボット側では日本語に変えられません。ただし、コマンドの説明文と選択肢は、Discord の表示言語が日本語のとき日本語で表示されます。Discord の言語が英語のままだと説明も英語で出るので、Discord の設定で表示言語を日本語にしてください。</p>
+  <h3>入力欄のあるコマンド</h3>
+  <table>
+    <tr><th>コマンド</th><th>英語の入力欄</th><th>日本語の意味・入れ方</th></tr>
+    <tr><td><span class="cmd">/ut</span></td><td><span class="cmd">player</span></td><td>選手名（FUT）。必須。※選手検索のURL形式は確認中のため、現在は「確認中」と表示されます。</td></tr>
+    <tr><td><span class="cmd">/share</span></td><td><span class="cmd">url</span>、<span class="cmd">message</span></td><td><span class="cmd">url</span>＝共有するURL（必須、http:// または https:// で始まるもの）。<span class="cmd">message</span>＝URLと一緒に送るメッセージ（任意）。</td></tr>
+    <tr><td><span class="cmd">/announce</span></td><td><span class="cmd">message</span>、<span class="cmd">image_url</span>、<span class="cmd">link_url</span></td><td><span class="cmd">message</span>＝お知らせの文章（必須）。<span class="cmd">image_url</span>＝添付する画像のURL（任意）。<span class="cmd">link_url</span>＝一緒に載せるリンクURL（任意）。</td></tr>
+    <tr><td><span class="cmd">/setscope</span></td><td><span class="cmd">scope_id</span></td><td>共有範囲の番号（必須、1〜23）。番号と範囲の対応は「共有範囲」をご覧ください。</td></tr>
+    <tr><td><span class="cmd">/setlang</span></td><td><span class="cmd">lang</span></td><td>言語コード（必須）。日本語 <span class="cmd">ja</span>、英語 <span class="cmd">en</span>、ほか <span class="cmd">es</span>（スペイン語）、<span class="cmd">pt</span>（ポルトガル語）、<span class="cmd">fr</span>（フランス語）、<span class="cmd">id</span>（インドネシア語）、<span class="cmd">ms</span>（マレー語）、<span class="cmd">ko</span>（韓国語）、<span class="cmd">zh</span>（中国語）、<span class="cmd">de</span>（ドイツ語）、<span class="cmd">it</span>（イタリア語）、<span class="cmd">nl</span>（オランダ語）、<span class="cmd">pl</span>（ポーランド語）、<span class="cmd">uk</span>（ウクライナ語）、<span class="cmd">ru</span>（ロシア語）、<span class="cmd">tr</span>（トルコ語）、<span class="cmd">ar</span>（アラビア語）、<span class="cmd">hi</span>（ヒンディー語）、<span class="cmd">th</span>（タイ語）、<span class="cmd">vi</span>（ベトナム語）。</td></tr>
+    <tr><td><span class="cmd">/setwelcome</span></td><td><span class="cmd">board</span>、<span class="cmd">dm</span>、<span class="cmd">channel</span>、<span class="cmd">template</span></td><td><span class="cmd">board</span>＝参加時に歓迎ボードを投稿する（必須、はい／いいえ）。<span class="cmd">dm</span>＝参加時に歓迎DMを送る（必須、はい／いいえ）。<span class="cmd">channel</span>＝歓迎ボードの投稿先チャンネル（任意、省略時はシステムチャンネル）。<span class="cmd">template</span>＝歓迎ボードのデザイン（任意、<span class="cmd">league</span>＝リーグ標準、<span class="cmd">blue</span>＝ブルー、<span class="cmd">light</span>＝ライト）。</td></tr>
+    <tr><td><span class="cmd">/squad</span></td><td><span class="cmd">action</span>、<span class="cmd">players</span>、<span class="cmd">screenshot</span></td><td><span class="cmd">action</span>＝操作（必須、<span class="cmd">register</span>＝登録、<span class="cmd">show</span>＝表示、<span class="cmd">delete</span>＝削除）。<span class="cmd">players</span>＝PSIDをカンマ区切りで入力（登録用）。<span class="cmd">screenshot</span>＝スカッドのスクリーンショット添付（登録用、OCR読み取りは準備中のため保存のみ）。</td></tr>
+    <tr><td><span class="cmd">/remind</span></td><td><span class="cmd">action</span>、<span class="cmd">timing</span>、<span class="cmd">round_name</span>、<span class="cmd">match_date</span></td><td><span class="cmd">action</span>＝操作（必須、<span class="cmd">register</span>＝登録、<span class="cmd">list</span>＝一覧、<span class="cmd">delete</span>＝削除）。<span class="cmd">timing</span>＝配信タイミング（登録用、<span class="cmd">day_before</span>＝前日、<span class="cmd">at_start</span>＝開始時、<span class="cmd">after_2h</span>＝終了2時間後）。<span class="cmd">round_name</span>＝ラウンド名（登録用、例：決勝）。<span class="cmd">match_date</span>＝試合日（登録用、YYYY.MM.DD形式、例：2026.11.09）。登録後は管理者の承認が必要です。</td></tr>
+  </table>
+  <h3>入力欄のないコマンド</h3>
+  <p><span class="cmd">/help</span>・<span class="cmd">/tournaments</span>・<span class="cmd">/news</span>・<span class="cmd">/games</span>・<span class="cmd">/clubrank</span>・<span class="cmd">/scope</span> は入力欄がありません。<span class="cmd">/next</span>・<span class="cmd">/standings</span>・<span class="cmd">/matches</span>・<span class="cmd">/ranking</span>・<span class="cmd">/schedule</span>・<span class="cmd">/remind</span>（登録時）は、実行後に大会を選ぶ画面が出ます。大会名は日本語で表示されるので、そこから選んでください。</p>
+  <h3>結果の表に出る英語の見出し</h3>
+  <table>
+    <tr><th>英語</th><th>日本語の意味</th></tr>
+    <tr><td><span class="cmd">#</span></td><td>順位</td></tr>
+    <tr><td><span class="cmd">Club</span></td><td>クラブ（チーム名）</td></tr>
+    <tr><td><span class="cmd">Pts</span></td><td>ポイント（勝ち点／ランキングの点数）</td></tr>
+    <tr><td><span class="cmd">P</span></td><td>試合数</td></tr>
+    <tr><td><span class="cmd">GF</span> ／ <span class="cmd">GA</span> ／ <span class="cmd">GD</span></td><td>得点 ／ 失点 ／ 得失点差</td></tr>
+    <tr><td><span class="cmd">PSID</span></td><td>プレイヤーID</td></tr>
+    <tr><td><span class="cmd">Last</span></td><td>前月の順位</td></tr>
+  </table>
+  <p class="muted small">リマインダーの承認カードに出るボタンは日本語です（「承認」「却下」）。「Add」「title」という入力欄は、ボットのコマンドにはありません。Discord 本体の画面に出る英語は、Discord の表示言語の設定に従います。</p>
+</section>
+
 <section id="tutorial">
   <h2>チュートリアル</h2>
-  <p>eS-League Bot チュートリアル（9ページのPDF）は、こちらからダウンロードできます。</p>
+  <p>eS-League Bot チュートリアル（11ページのPDF）は、こちらからダウンロードできます。</p>
   <p><a href="tutorial.pdf">チュートリアルPDFをダウンロード</a></p>
 </section>
 

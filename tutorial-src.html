@@ -145,6 +145,9 @@
   <div class="warn">
     <p style="margin:0">コマンドは、サーバーの管理者（Administrator）権限またはサーバーの管理（Manage Server）権限を持つ人だけが使えます。権限のない人が実行した場合は、その人にだけ「権限が必要です」と表示されます。権限を持つ人が実行したコマンドの結果は、サーバー内の全員が見える公開投稿になります。ウェルカムの自動投稿やリマインダーの自動投稿など、コマンドではない自動動作は対象外です。</p>
   </div>
+  <h3>ボットの招待（サーバーへの追加）</h3>
+  <p>ボットはダウンロードするものではなく、Discord サーバーへ招待（追加）するものです。案内ページの「ボットの招待」からリンクを開き、追加するサーバーを選んでください。追加できるのは、そのサーバーの管理者だけです。招待リンク：https://discord.com/oauth2/authorize?client_id=1568968701276070009&amp;scope=bot+applications.commands&amp;permissions=379968</p>
+  <p class="muted small">ボットに与える権限：チャンネルの表示、メッセージの送信、リアクションの追加、リンクの埋め込み、ファイルの添付、メッセージ履歴の読み取り、外部絵文字の使用。</p>
   <h3>サーバー設定の表示例（リーグ公式サーバー）</h3>
   <table>
     <tr><th style="width:32mm">項目</th><th>設定</th></tr>
@@ -189,7 +192,7 @@
     <tr><td><span class="cmd">/ut</span></td><td>選手データベースへのリンク。選手検索のURL形式は<span class="tag check">確認中</span>のため、現在は「確認中」と表示されます。</td></tr>
     <tr><td><span class="cmd">/clubrank</span></td><td>クラブの順位。EA公式ランキングへのリンクは<span class="tag prep">準備中</span></td></tr>
     <tr><td><span class="cmd">/setwelcome</span></td><td>入室したメンバーへの歓迎（ボード／DM）の設定。歓迎ボードのデザインテンプレートもここで選びます。</td></tr>
-    <tr><td><span class="cmd">/remind</span></td><td>試合リマインダーを登録します。登録→管理者承認→配信の承認制です。詳しくは「6. リマインダー」をご覧ください。</td></tr>
+    <tr><td><span class="cmd">/remind</span></td><td>試合リマインダーを登録します。登録→管理者承認→配信の承認制です。詳しくは「7. リマインダー」をご覧ください。</td></tr>
     <tr><td><span class="cmd">/schedule</span></td><td>日程調整アンケートを作成します。リアクションで投票します。</td></tr>
     <tr><td><span class="cmd">/scope</span></td><td>現在の共有範囲を表示します。</td></tr>
     <tr><td><span class="cmd">/setscope</span></td><td>共有範囲を設定します。初期値は日本。部（1〜3部）は別々の範囲として扱います。加盟国は国名で指定します。</td></tr>
@@ -198,9 +201,44 @@
   <p class="muted small">「準備中」「確認中」と書かれているものは、まだ使えない機能です。使えるようになり次第、案内を更新します。</p>
 </section>
 
+<!-- ============ 4b. 英語の項目名の日本語説明 ============ -->
+<section class="page">
+  <h2><span class="no">4</span>英語の項目名の日本語説明</h2>
+  <p>コマンド名（<span class="cmd">/next</span> など）と入力欄の名前（<span class="cmd">action</span> など）は英語のままです。これは Discord の仕組みで、コマンド名は小文字の英数字でなければならないため、ボット側では日本語に変えられません。ただし、コマンドの説明文と選択肢（<span class="cmd">register</span>＝登録 など）は、Discord の表示言語が日本語のとき日本語で表示されます。Discord の言語が英語のままだと説明も英語で出るので、Discord の設定で表示言語を日本語にしてください。</p>
+  <h3>入力欄のあるコマンド（入力するもの・意味）</h3>
+  <table>
+    <tr><th style="width:26mm">コマンド</th><th style="width:30mm">英語の入力欄</th><th>日本語の意味・入れ方</th></tr>
+    <tr><td><span class="cmd">/ut</span></td><td><span class="cmd">player</span></td><td>選手名（FUT）。必須。※選手検索のURL形式は確認中のため、現在は「確認中」と表示されます。</td></tr>
+    <tr><td><span class="cmd">/share</span></td><td><span class="cmd">url</span><br><span class="cmd">message</span></td><td><span class="cmd">url</span>＝共有するURL（必須、http:// または https:// で始まるもの）。<span class="cmd">message</span>＝URLと一緒に送るメッセージ（任意）。</td></tr>
+    <tr><td><span class="cmd">/announce</span></td><td><span class="cmd">message</span><br><span class="cmd">image_url</span><br><span class="cmd">link_url</span></td><td><span class="cmd">message</span>＝お知らせの文章（必須）。<span class="cmd">image_url</span>＝添付する画像のURL（任意）。<span class="cmd">link_url</span>＝一緒に載せるリンクURL（任意）。</td></tr>
+    <tr><td><span class="cmd">/setscope</span></td><td><span class="cmd">scope_id</span></td><td>共有範囲の番号（必須、1〜23）。番号と範囲の対応は「5. 共有範囲」をご覧ください。</td></tr>
+    <tr><td><span class="cmd">/setlang</span></td><td><span class="cmd">lang</span></td><td>言語コード（必須）。日本語は <span class="cmd">ja</span>、英語は <span class="cmd">en</span>。ほかは <span class="cmd">es</span>（スペイン語）、<span class="cmd">pt</span>（ポルトガル語）、<span class="cmd">fr</span>（フランス語）、<span class="cmd">id</span>（インドネシア語）、<span class="cmd">ms</span>（マレー語）、<span class="cmd">ko</span>（韓国語）、<span class="cmd">zh</span>（中国語）、<span class="cmd">de</span>（ドイツ語）、<span class="cmd">it</span>（イタリア語）、<span class="cmd">nl</span>（オランダ語）、<span class="cmd">pl</span>（ポーランド語）、<span class="cmd">uk</span>（ウクライナ語）、<span class="cmd">ru</span>（ロシア語）、<span class="cmd">tr</span>（トルコ語）、<span class="cmd">ar</span>（アラビア語）、<span class="cmd">hi</span>（ヒンディー語）、<span class="cmd">th</span>（タイ語）、<span class="cmd">vi</span>（ベトナム語）。</td></tr>
+    <tr><td><span class="cmd">/setwelcome</span></td><td><span class="cmd">board</span><br><span class="cmd">dm</span><br><span class="cmd">channel</span><br><span class="cmd">template</span></td><td><span class="cmd">board</span>＝参加時に歓迎ボードを投稿する（必須、はい／いいえ）。<span class="cmd">dm</span>＝参加時に歓迎DMを送る（必須、はい／いいえ）。<span class="cmd">channel</span>＝歓迎ボードの投稿先チャンネル（任意、省略時はシステムチャンネル）。<span class="cmd">template</span>＝歓迎ボードのデザイン（任意、<span class="cmd">league</span>＝リーグ標準、<span class="cmd">blue</span>＝ブルー、<span class="cmd">light</span>＝ライト）。</td></tr>
+    <tr><td><span class="cmd">/squad</span></td><td><span class="cmd">action</span><br><span class="cmd">players</span><br><span class="cmd">screenshot</span></td><td><span class="cmd">action</span>＝操作（必須、<span class="cmd">register</span>＝登録、<span class="cmd">show</span>＝表示、<span class="cmd">delete</span>＝削除）。<span class="cmd">players</span>＝PSIDをカンマ区切りで入力（登録用）。<span class="cmd">screenshot</span>＝スカッドのスクリーンショット添付（登録用、OCR読み取りは準備中のため保存のみ）。</td></tr>
+    <tr><td><span class="cmd">/remind</span></td><td><span class="cmd">action</span><br><span class="cmd">timing</span><br><span class="cmd">round_name</span><br><span class="cmd">match_date</span></td><td><span class="cmd">action</span>＝操作（必須、<span class="cmd">register</span>＝登録、<span class="cmd">list</span>＝一覧、<span class="cmd">delete</span>＝削除）。<span class="cmd">timing</span>＝配信タイミング（登録用、<span class="cmd">day_before</span>＝前日、<span class="cmd">at_start</span>＝開始時、<span class="cmd">after_2h</span>＝終了2時間後）。<span class="cmd">round_name</span>＝ラウンド名（登録用、例：決勝）。<span class="cmd">match_date</span>＝試合日（登録用、YYYY.MM.DD形式、例：2026.11.09）。登録後は管理者の承認が必要です（「7. リマインダー」参照）。</td></tr>
+  </table>
+  <h3>入力欄のないコマンド（選ぶだけ・そのまま実行）</h3>
+  <p><span class="cmd">/help</span>・<span class="cmd">/tournaments</span>・<span class="cmd">/news</span>・<span class="cmd">/games</span>・<span class="cmd">/clubrank</span>・<span class="cmd">/scope</span> は入力欄がありません。<span class="cmd">/next</span>・<span class="cmd">/standings</span>・<span class="cmd">/matches</span>・<span class="cmd">/ranking</span>・<span class="cmd">/schedule</span>・<span class="cmd">/remind</span>（登録時）は、実行後に大会を選ぶ画面が出ます。大会名は日本語で表示されるので、そこから選んでください。</p>
+  <h3>結果の表に出る英語の見出し</h3>
+  <table>
+    <tr><th style="width:26mm">英語</th><th>日本語の意味</th></tr>
+    <tr><td><span class="cmd">#</span></td><td>順位</td></tr>
+    <tr><td><span class="cmd">Club</span></td><td>クラブ（チーム名）</td></tr>
+    <tr><td><span class="cmd">Pts</span></td><td>ポイント（勝ち点／ランキングの点数）</td></tr>
+    <tr><td><span class="cmd">P</span></td><td>試合数</td></tr>
+    <tr><td><span class="cmd">GF</span> ／ <span class="cmd">GA</span> ／ <span class="cmd">GD</span></td><td>得点 ／ 失点 ／ 得失点差</td></tr>
+    <tr><td><span class="cmd">PSID</span></td><td>プレイヤーID</td></tr>
+    <tr><td><span class="cmd">Last</span></td><td>前月の順位</td></tr>
+  </table>
+  <div class="note">
+    <p style="margin:0"><strong>承認・却下のボタン</strong> ― リマインダーの承認カードに出るボタンは日本語です（「承認」「却下」）。大会を選ぶ画面の案内文も日本語で表示されます。</p>
+  </div>
+  <p class="muted small">※「Add」「title」という入力欄は、ボットのコマンドにはありません。Discord 本体の画面（添付ファイルの追加など）に出る英語は、Discord の表示言語の設定に従います。見かけた場所を教えていただければ、こちらでも確認します。</p>
+</section>
+
 <!-- ============ 5. 共有範囲23種類 ============ -->
 <section class="page">
-  <h2><span class="no">4</span>共有範囲（23種類）</h2>
+  <h2><span class="no">5</span>共有範囲（23種類）</h2>
   <p>共有範囲は、サーバーごとに管理者が <span class="cmd">/setscope</span> で選びます。初期値は日本です。部（1〜3部）は別々の範囲として扱います。加盟国は国名で指定します。</p>
   <div class="cols">
     <div>
@@ -264,7 +302,7 @@
 
 <!-- ============ 6. 対応言語20言語 ============ -->
 <section class="page">
-  <h2><span class="no">5</span>対応言語（20言語）</h2>
+  <h2><span class="no">6</span>対応言語（20言語）</h2>
   <p>Botの表示言語は、サーバーごとに管理者が <span class="cmd">/setlang</span> で設定します。完全対応は日本語と英語のみです。他の18言語は、中核部分の翻訳と英語フォールバックです。</p>
   <h3>完全対応（2言語）</h3>
   <ul>
@@ -307,7 +345,7 @@
 
 <!-- ============ 7. 歓迎ボード・歓迎DMとリマインダー承認フロー ============ -->
 <section class="page">
-  <h2><span class="no">6</span>歓迎ボード・歓迎DMとリマインダー</h2>
+  <h2><span class="no">7</span>歓迎ボード・歓迎DMとリマインダー</h2>
   <h3>歓迎ボード・歓迎DM</h3>
   <p>新しいメンバーがサーバーに入ると、歓迎ボード（公開投稿）と歓迎DMを送ることができます。設定は <span class="cmd">/setwelcome</span> で行います（サーバー設定で切り替え）。</p>
   <ul>
@@ -330,7 +368,7 @@
 
 <!-- ============ 8. デザインテンプレートと対応組織 ============ -->
 <section class="page">
-  <h2><span class="no">7</span>デザインテンプレートと対応組織</h2>
+  <h2><span class="no">8</span>デザインテンプレートと対応組織</h2>
   <h3>デザインテンプレート（3件）</h3>
   <p>歓迎ボードのデザインテンプレートです。ブルーとライトは、eS-Leagueのエンブレムのカラーで作られています。</p>
   <div class="cols">
@@ -375,7 +413,7 @@
 
 <!-- ============ 9. ロードマップと注意事項 ============ -->
 <section class="page">
-  <h2><span class="no">8</span>ロードマップと注意事項</h2>
+  <h2><span class="no">9</span>ロードマップと注意事項</h2>
   <h3>実装済み</h3>
   <ul>
     <li>ポータル連携コマンド一式</li>
